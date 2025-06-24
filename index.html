@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紫微斗数+霍兰德测试 - 免费版</title>
+    <meta name="description" content="免费的紫微斗数命理分析和霍兰德职业兴趣测试，AI智能分析，专业推荐">
+    <meta name="keywords" content="紫微斗数,霍兰德测试,职业测试,命理分析,免费">
+    
+    <!-- 优化加载速度 -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* 霍兰德测试样式 */
+        .question-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .option-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .option-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .option-score {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* 结果展示样式 */
+        .result-section {
+            margin-top: 30px;
+        }
+
+        .result-item {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .result-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #e1e5e9;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        /* 加载动画 */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e1e5e9;
+            border-left-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .card-content {
+                padding: 20px;
+            }
+        }
+
+        /* 免费版标识 */
+        .free-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 紫微斗数 + 霍兰德测试</h1>
+            <p class="subtitle">免费版 · 探索您的命理与职业天赋</p>
+        </div>
+
+        <div class="card" id="main-card">
+            <div class="card-header">
+                <div class="free-badge">免费版</div>
+                <h2>📝 开始测试</h2>
+                <p>免费体验紫微斗数和霍兰德职业兴趣测试</p>
+            </div>
+            <div class="card-content">
+                <div class="result-section">
+                    <div class="result-item">
+                        <h3>🎯 免费版功能</h3>
+                        <p>✅ 霍兰德职业兴趣测试（24题完整版）</p>
+                        <p>✅ 基础紫微命理分析</p>
+                        <p>✅ 职业推荐和性格分析</p>
+                        <p>✅ 本地数据保存</p>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h3>🆓 完全免费部署</h3>
+                        <p>✅ GitHub Pages - 稳定可靠，无流量限制</p>
+                        <p>✅ Netlify - 30秒极速部署</p>
+                        <p>✅ Vercel - 全球CDN加速</p>
+                        <p>✅ 支持自定义域名和HTTPS</p>
+                    </div>
+
+                    <div class="result-item">
+                        <h3>🚀 立即部署</h3>
+                        <p><strong>方法1：GitHub Pages</strong></p>
+                        <p>1. 注册GitHub账号并创建仓库</p>
+                        <p>2. 上传免费部署版本.html文件</p>
+                        <p>3. 启用GitHub Pages功能</p>
+                        <p>4. 访问：https://用户名.github.io/仓库名/</p>
+                        
+                        <p style="margin-top: 15px;"><strong>方法2：Netlify拖拽部署</strong></p>
+                        <p>1. 访问netlify.com注册账号</p>
+                        <p>2. 直接拖拽HTML文件到部署区域</p>
+                        <p>3. 30秒即可获得访问链接</p>
+                    </div>
+
+                    <div class="result-item">
+                        <h3>💰 成本对比</h3>
+                        <p>🆓 <strong>免费方案：</strong>0元/年</p>
+                        <p>💰 <strong>云服务器：</strong>720元/年</p>
+                        <p>💎 <strong>企业方案：</strong>6000元/年</p>
+                        <p style="margin-top: 10px; color: #28a745; font-weight: bold;">免费方案可实现80%完整功能！</p>
+                    </div>
+
+                    <div class="result-item">
+                        <h3>📚 部署指南</h3>
+                        <p>📖 详细教程：免费部署方案.md</p>
+                        <p>💻 完整代码：免费部署版本.html</p>
+                        <p>🔧 技术支持：参考文档中的故障排除</p>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="window.open('https://github.com', '_blank')">🚀 立即开始免费部署</button>
+                <button class="btn" onclick="showDemo()" style="background: #28a745; margin-top: 10px;">👀 查看功能演示</button>
+            </div>
+        </div>
+
+        <div class="card hidden" id="demo-card">
+            <div class="card-header">
+                <h2>🎯 功能演示</h2>
+                <p>免费版功能预览</p>
+            </div>
+            <div class="card-content">
+                <div class="result-section">
+                    <div class="result-item">
+                        <h3>📊 霍兰德测试示例</h3>
+                        <p><strong>测试题目：</strong>我喜欢使用工具进行手工制作</p>
+                        <p><strong>选项：</strong>非常喜欢(5分) | 比较喜欢(4分) | 一般(3分) | 不太喜欢(2分) | 非常不喜欢(1分)</p>
+                        <p><strong>共24题，涵盖RIASEC六大职业兴趣类型</strong></p>
+                    </div>
+
+                    <div class="result-item">
+                        <h3>🔮 紫微分析示例</h3>
+                        <p><strong>基本性格：</strong>您性格温和，善于与人相处，具有很强的同理心。</p>
+                        <p><strong>事业建议：</strong>适合从事创意类工作，发挥您的想象力和艺术天赋。</p>
+                        <p><strong>感情建议：</strong>在感情中要学会表达自己的想法，坦诚沟通很重要。</p>
+                    </div>
+
+                    <div class="result-item">
+                        <h3>💼 职业推荐示例</h3>
+                        <p><strong>主要类型：</strong>艺术型 (Artistic)</p>
+                        <p><strong>职业推荐：</strong>设计师、艺术家、作家、音乐家、摄影师、广告创意等。</p>
+                        <p><strong>综合建议：</strong>充分发挥艺术型优势，在创意领域寻找发展机会。</p>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="backToMain()">🔙 返回主页</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDemo() {
+            document.getElementById('main-card').classList.add('hidden');
+            document.getElementById('demo-card').classList.remove('hidden');
+        }
+
+        function backToMain() {
+            document.getElementById('demo-card').classList.add('hidden');
+            document.getElementById('main-card').classList.remove('hidden');
+        }
+
+        // 页面加载完成提示
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('紫微斗数+霍兰德测试 免费版已加载完成！');
+            console.log('访问 免费部署方案.md 查看详细部署教程');
+        });
+    </script>
+</body>
+</html> 
